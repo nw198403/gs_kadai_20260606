@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>つなぎノート | 交換日記</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+
+  <!-- ========== ログイン画面 ========== -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+
+      <div class="login-hero">
+        <img src="img/dog.png" alt="マスコット" class="login-dog">
+        <h1 class="login-title">つなぎノート</h1>
+        <p class="login-subtitle">交換日記</p>
+      </div>
+
+      <p class="login-lead">お名前とロールを選んでください</p>
+
+      <div class="login-field">
+        <label for="login-name">お名前</label>
+        <input type="text" id="login-name" placeholder="例：山田 花子" autocomplete="off" maxlength="20">
+      </div>
+
+      <div class="login-roles">
+        <button class="role-btn" data-role="client" id="role-client">
+          <span class="role-icon">🌿</span>
+          <span class="role-label">クライアント</span>
+          <span class="role-sub">日記を書く</span>
+        </button>
+        <button class="role-btn" data-role="counselor" id="role-counselor">
+          <span class="role-icon">☕</span>
+          <span class="role-label">カウンセラー</span>
+          <span class="role-sub">コメントを返す</span>
+        </button>
+      </div>
+
+      <p id="login-error" class="login-error hidden"></p>
+
+    </div>
+  </div>
+
+  <!-- ========== メイン（ログイン後に表示） ========== -->
+  <div id="app" class="hidden">
+
+    <!-- ヘッダー -->
+    <header>
+      <div class="header-inner">
+        <img class="header-dog" src="img/dog.png" alt="つなぎノートのマスコット">
+
+        <div class="header-title">
+          <div class="header-title-row">
+            <h1>つなぎノート</h1>
+            <span class="diary-badge">交換日記</span>
+          </div>
+          <p>Tsunagi Note &nbsp;—&nbsp; あなたの毎日を、そっと見守ります</p>
+        </div>
+
+        <div class="header-right">
+          <div class="user-info-wrap">
+            <span id="header-user-label" class="header-user-label"></span>
+            <button id="header-logout-btn" class="header-logout-btn" title="ログアウト">ログアウト</button>
+          </div>
+
+          <!-- 使い方ツールチップ -->
+          <div class="info-tooltip-wrap">
+            <button class="info-icon-btn" aria-label="使い方を見る">
+              <svg viewBox="0 0 40 46" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 4 2 L 26 2 L 36 12 L 36 44 L 4 44 Z" fill="#C8DADF" />
+                <path d="M 26 2 L 26 12 L 36 12 Z" fill="#8AB4CE" opacity="0.5"/>
+                <line x1="10" y1="20" x2="30" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="10" y1="25" x2="30" y2="25" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="10" y1="30" x2="22" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="31" cy="38" r="9" fill="#4A4040"/>
+                <circle cx="31" cy="33.5" r="1.8" fill="white"/>
+                <rect x="29.4" y="36" width="3.2" height="6" rx="1.2" fill="white"/>
+              </svg>
+              <span class="info-label">使い方</span>
+            </button>
+            <div class="tooltip-box" role="tooltip">
+              <p class="tooltip-title">
+                <svg class="tooltip-diary-icon" viewBox="0 0 56 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="3" y="2" width="44" height="56" rx="4" fill="white" stroke="#2C2826" stroke-width="3.5"/>
+                  <line x1="13" y1="2" x2="13" y2="58" stroke="#2C2826" stroke-width="3"/>
+                  <text x="29" y="26" text-anchor="middle" font-size="11" font-weight="700" fill="#2C2826" font-family="Arial, sans-serif">Diary</text>
+                  <line x1="3" y1="48" x2="47" y2="48" stroke="#2C2826" stroke-width="3"/>
+                  <line x1="3" y1="54" x2="47" y2="54" stroke="#2C2826" stroke-width="3"/>
+                  <rect x="47" y="22" width="9" height="16" rx="3" fill="white" stroke="#2C2826" stroke-width="3"/>
+                </svg>
+                交換日記について
+              </p>
+              <div class="tooltip-step">
+                <span class="tooltip-num">1</span>
+                <p>カレンダーの日付をクリック</p>
+              </div>
+              <div class="tooltip-step">
+                <span class="tooltip-num">2</span>
+                <p>その日の出来事や気持ちを自由に記入</p>
+              </div>
+              <div class="tooltip-step">
+                <span class="tooltip-num">3</span>
+                <p>カウンセラーが後日コメントを書いて返信</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- カウンセラー用：担当クライアント選択バー -->
+    <div id="client-select-bar" class="client-select-bar hidden">
+      <label for="client-select">表示中のクライアント：</label>
+      <select id="client-select"></select>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <main>
+      <div class="container">
+        <section class="calendar-section">
+          <div class="calendar-nav">
+            <button id="prev-month" class="nav-btn">&#8249;</button>
+            <h2 id="current-month-label">読み込み中…</h2>
+            <button id="next-month" class="nav-btn">&#8250;</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span class="sun">日</span>
+            <span>月</span><span>火</span><span>水</span><span>木</span><span>金</span>
+            <span class="sat">土</span>
+          </div>
+          <div id="calendar-grid" class="calendar-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ========== 日記モーダル ========== -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-panel">
+
+        <div class="modal-header">
+          <h3 id="modal-date-title"></h3>
+          <button class="modal-close-btn" id="modal-close-btn">✕</button>
+        </div>
+
+        <!-- チャットメッセージエリア -->
+        <div class="modal-chat-body" id="modal-chat-body">
+          <div class="diary-empty-state" id="diary-empty-state">
+            <span>📖</span>
+            <p>この日の記録はまだありません</p>
+            <p class="diary-empty-sub">メッセージを送ってみましょう</p>
+          </div>
+        </div>
+
+        <!-- 入力バー -->
+        <div class="modal-input-bar">
+          <button id="delete-btn" type="button" class="btn-delete-small" title="この日の記録を削除">🗑</button>
+          <textarea
+            id="diary-input"
+            class="diary-chat-input"
+            placeholder="メッセージを入力… (Shift+Enter で改行)"
+            rows="1"
+            maxlength="500"
+          ></textarea>
+          <button id="save-btn" type="button" class="diary-send-btn" aria-label="送信">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div id="toast" class="toast hidden"></div>
+
+    <footer>
+      <p>© つなぎノート</p>
+    </footer>
+
+  </div><!-- /#app -->
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

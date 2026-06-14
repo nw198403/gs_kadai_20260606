@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>つなぎノート | チャット</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+<body class="chat-page">
+
+  <!-- ========== ログイン画面 ========== -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+
+      <!-- マスコット＋タイトル -->
+      <div class="login-hero">
+        <img src="img/dog.png" alt="マスコット" class="login-dog">
+        <h1 class="login-title">つなぎノート</h1>
+        <p class="login-subtitle">チャット機能</p>
+      </div>
+
+      <p class="login-lead">ログイン方法を選んでください</p>
+
+      <!-- 名前入力 -->
+      <div class="login-field">
+        <label for="login-name">お名前</label>
+        <input type="text" id="login-name" placeholder="例：山田 花子" autocomplete="off" maxlength="20">
+      </div>
+
+      <!-- ロール選択 -->
+      <div class="login-roles">
+        <button class="role-btn" data-role="client" id="role-client">
+          <span class="role-icon">🌿</span>
+          <span class="role-label">クライアント</span>
+          <span class="role-sub">日記・相談を送る</span>
+        </button>
+        <button class="role-btn" data-role="counselor" id="role-counselor">
+          <span class="role-icon">☕</span>
+          <span class="role-label">カウンセラー</span>
+          <span class="role-sub">コメント・返信をする</span>
+        </button>
+      </div>
+
+      <p id="login-error" class="login-error hidden">お名前を入力してください</p>
+
+    </div>
+  </div>
+
+  <!-- ========== チャット画面 ========== -->
+  <div id="chat-screen" class="chat-screen hidden">
+
+    <!-- チャットヘッダー -->
+    <header class="chat-header">
+      <a href="index.html" class="back-btn" title="交換日記へ戻る">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+        </svg>
+      </a>
+      <div class="chat-header-info">
+        <img src="img/dog.png" alt="マスコット" class="chat-header-icon">
+        <div>
+          <p class="chat-header-title">つなぎノート チャット</p>
+          <p class="chat-header-sub" id="chat-header-sub">接続中…</p>
+        </div>
+      </div>
+      <button class="logout-btn" id="logout-btn" title="ログアウト">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- メッセージエリア -->
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-date-divider">
+        <span id="today-label">今日</span>
+      </div>
+    </div>
+
+    <!-- 入力エリア -->
+    <div class="chat-input-bar">
+      <textarea
+        id="chat-input"
+        class="chat-textarea"
+        placeholder="メッセージを入力… (Shift+Enter で改行)"
+        rows="1"
+        maxlength="500"
+      ></textarea>
+      <button id="send-btn" class="send-btn" aria-label="送信">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Firebase SDK (v9 compat モード) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script src="js/chat.js"></script>
+</body>
+</html>
